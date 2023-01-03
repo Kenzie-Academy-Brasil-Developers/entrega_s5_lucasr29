@@ -29,6 +29,7 @@ export class User {
   updatedAt: Date;
 
   @OneToMany(() => schedulesUserProperties, (schedulesUserProperties) => schedulesUserProperties.user)
+  schedules: schedulesUserProperties[]
 
   @BeforeInsert()
   hashPassword(){

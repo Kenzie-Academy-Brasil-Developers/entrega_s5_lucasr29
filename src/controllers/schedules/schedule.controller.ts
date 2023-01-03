@@ -4,5 +4,5 @@ import { createScheduleService } from "../../services/schedules/schedules.servic
 export const scheduleCreationController = async (request: Request, response: Response) => {
     const data = await createScheduleService(request.body)
 
-    return response.status(201).json(data)
+    return response.status(201).json({message:data})
 }

@@ -24,7 +24,6 @@ export const ensureDataIsValid = (schema: AnySchema) => async (request: Request,
         request.body.userId = request.user.id
     }
 
-    console.log(request.body)
     try {
         const validatedData = await schema.validate(request.body, {
             abortEarly: false,

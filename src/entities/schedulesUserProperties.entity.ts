@@ -8,16 +8,16 @@ export class schedulesUserProperties{
     id: string
 
     @Column({type: 'date'})
-    date: Date
+    date: string
 
     @Column({type: 'time'})
-    time: Date
+    hour: string
 
-    @ManyToOne(() => Properties, {nullable: false})
+    @ManyToOne(() => Properties,(properties) => properties.schedules)
     @JoinColumn()
-    property: string
+    property: Properties
 
-    @ManyToOne(() => User, {nullable: false})
+    @ManyToOne(() => User, (user) => user.schedules)
     @JoinColumn()
-    user: string
+    user: User
 }
