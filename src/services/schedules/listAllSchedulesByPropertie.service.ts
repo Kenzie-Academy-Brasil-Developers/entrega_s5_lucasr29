@@ -3,6 +3,7 @@ import AppDataSource from "../../data-source";
 import { Properties } from "../../entities/properties.entity";
 import { schedulesUserProperties } from "../../entities/schedulesUserProperties.entity";
 import { AppError } from "../../errors/AppError";
+import { scheduleResArraySerializer } from "../../serializers/schedule.serializer";
 
 export const listSchedulesByPropertyService = async (propertyId: string) => {
     const propertyRepo = AppDataSource.getRepository(Properties)
@@ -14,9 +15,13 @@ export const listSchedulesByPropertyService = async (propertyId: string) => {
         throw new AppError("property doesn't exists", 404)
     }
 
-    const schedules = await scheduleRepo.find({where: {property: {id: propertyId}}, relations: {user:true}})
+    const schedulesFind = await scheduleRepo.find({where: {property: {id: propertyId}}, relations: {user:true}})
 
-    const res = {schedules: schedules}
+    const schedules = {schedules: schedulesFind}
+
+    const res = await scheduleResArraySerializer.validate(schedules, {
+        stripUnknown: true
+    })
 
     return res
 }
